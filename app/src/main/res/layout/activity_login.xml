@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Login">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/mauchudao"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Log In"
+            android:textColor="@color/colorchutrang"
+            android:textSize="@dimen/Sizechuan"
+            android:textStyle="bold"
+            android:paddingRight="10sp"
+            android:paddingLeft="10sp"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_weight="0.8">
+
+
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/imgV_google"
+            android:layout_width="370dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/buttongg"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_boqua"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:text="Bỏ qua >>>"
+        android:layout_margin="10sp"
+        android:textSize="@dimen/Sizechuan"
+        android:textColor="#000000"/>
+</LinearLayout>
