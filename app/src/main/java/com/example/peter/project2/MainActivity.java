@@ -13,9 +13,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    NavigationView navigationView;
+    public FirebaseUser user;
+    public GoogleApiClient mGoogleApiClient;
+    FirebaseAuth mAuth;
+
+//    ImageView imgAvatar;
+//    TextView txtName,txtemail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +59,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+//        initGoogle();
     }
 
     @Override
@@ -99,5 +119,49 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+
     }
+
+//    private void initGoogle() {
+//        mAuth = FirebaseAuth.getInstance();
+//
+//        //Get imageview and textview header
+//        View view = navigationView.getHeaderView(0);
+//        imgAvatar = (ImageView) view.findViewById(R.id.Avatar);
+//        txtName = (TextView) view.findViewById(R.id.txtusername);
+//        txtemail = (TextView) view.findViewById(R.id.txtEmail);
+//
+//        //------------GSO----------------
+//
+//        try {
+//            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                    .requestEmail()
+//                    .build();
+//            mGoogleApiClient = new GoogleApiClient.Builder(this)
+//                    .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+//                    .build();
+//            mGoogleApiClient.connect();
+//        } catch (Exception e) {
+////            Toast.makeText(this, e+"", Toast.LENGTH_SHORT).show();
+//        }
+//
+//        //---------------------------------
+//
+//        user = mAuth.getCurrentUser();
+//
+//        //get user data
+//
+//        try {
+//            if (user != null) {
+//                txtemail.setText(user.getEmail().toString());
+//                txtName.setText(user.getDisplayName().toString());
+//                Picasso.get().load(user.getPhotoUrl()).into(imgAvatar);
+//            } else {
+//                imgAvatar.setImageResource(R.drawable.logo);
+//                txtName.setText("Hello");
+//            }
+//        } catch (Exception e) {
+//            Toast.makeText(this, e + "", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 }

@@ -2,11 +2,11 @@ package com.example.peter.project2;
 
 public class MemberData {
     private String name;
-    private String color;
+    private int time;
 
-    public MemberData(String name, String color) {
+    public MemberData(String name, int time) {
         this.name = name;
-        this.color = color;
+        this.time = time;
     }
 
     // Add an empty constructor so we can later parse JSON into MemberData using Jackson
@@ -17,7 +17,15 @@ public class MemberData {
         return name;
     }
 
-    public String getColor() {
-        return color;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
     }
 }
