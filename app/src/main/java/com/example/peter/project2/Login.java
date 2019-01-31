@@ -35,7 +35,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
     private GoogleApiClient mGoogleApiClient;
     int RC_SIGN_IN = 001;
 
-
+    private static final String TAG = "peterTruong";
+    private FirebaseAuth mAuth;
+    public FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,68 +110,68 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
         }
     }
 
-//    public void checkUserState(){
-//        //Da dang nhap thi` di toi LoadingActivity
-//        mAuth = FirebaseAuth.getInstance();
-//
-//        try {
-//
-//            if (mAuth.getCurrentUser() != null){
-//                startActivity(new Intent(Login.this, MainActivity.class));
-//                finish();
-//            }
-//        } catch (Exception e) {
-//            Log.d("Login",e+"");
-//        }
-//    }
-//    private boolean isNetworkConnected() {
-//        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-//
-//        return cm.getActiveNetworkInfo() != null;
-//    }
-//
-//    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-//        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
-//
-//        //getting the auth credential
-//        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-//
-//        //Now using firebase we are signing in the user here
-//        mAuth.signInWithCredential(credential)
-//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()) {
-//                            Log.d(TAG, "signInWithCredential:success");
-//                            user = mAuth.getCurrentUser();
-//
-//                            //custom ducnguyen
-//                            if(mAuth.getCurrentUser() != null){
-//                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-//                            }
-//
-////                            Toast.makeText(getApplicationContext(), "User Signed In !!!!", Toast.LENGTH_SHORT).show();
-//                        } else {
-//                            // If sign in fails, display a message to the user.
-//                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-////                            Toast.makeText(getApplicationContext(), "Authentication failed.",
-////                                    Toast.LENGTH_SHORT).show();
-//
-//                        }
-//
-//                        // ...
-//                    }
-//                });
-//    }
-//
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//    }
-//
-//    @Override
-//    protected void onStop() {
-//        finish();
-//        super.onStop();
-//    }
+    public void checkUserState(){
+        //Da dang nhap thi` di toi LoadingActivity
+        mAuth = FirebaseAuth.getInstance();
+
+        try {
+
+            if (mAuth.getCurrentUser() != null){
+                startActivity(new Intent(Login.this, MainActivity.class));
+                finish();
+            }
+        } catch (Exception e) {
+            Log.d("Login",e+"");
+        }
+    }
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null;
+    }
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+
+        //getting the auth credential
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+
+        //Now using firebase we are signing in the user here
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "signInWithCredential:success");
+                            user = mAuth.getCurrentUser();
+
+                            //custom ducnguyen
+                            if(mAuth.getCurrentUser() != null){
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            }
+
+//                            Toast.makeText(getApplicationContext(), "User Signed In !!!!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+//                            Toast.makeText(getApplicationContext(), "Authentication failed.",
+//                                    Toast.LENGTH_SHORT).show();
+
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        finish();
+        super.onStop();
+    }
 }
