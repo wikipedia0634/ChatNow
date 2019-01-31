@@ -35,9 +35,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
     private GoogleApiClient mGoogleApiClient;
     int RC_SIGN_IN = 001;
 
-//    private static final String TAG = "peterTruong";
-//    private FirebaseAuth mAuth;
-//    public FirebaseUser user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,8 +101,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
         if (result.isSuccess()){
             GoogleSignInAccount acct = result.getSignInAccount();
 
-//            Intent intent = new Intent(Login.this,MainActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(Login.this,MainActivity.class);
+            startActivity(intent);
         } else {
 
         }
