@@ -1,6 +1,7 @@
 package com.example.peter.project2;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,12 +18,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.example.peter.project2.Service.SaveLocal;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -31,18 +32,30 @@ public class MainActivity extends AppCompatActivity
     public FirebaseUser user;
     public GoogleApiClient mGoogleApiClient;
     FirebaseAuth mAuth;
-
-//    ImageView imgAvatar;
-//    TextView txtName,txtemail;
+    MemberData userLogged;
+    ImageView imgAvatar;
+    TextView txtName, txtemail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //SharedPreferences
+
+        AnhXa();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //get User from local
+        MemberData cuurentUser= (MemberData) getIntent().getSerializableExtra("user-info");
+        //set Info CurrentUser
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+       txtName.setText(cuurentUser.getName());
+        txtemail.setText(cuurentUser.getUsername());
+        Picasso.get().load(cuurentUser.getUrlAvatar()).into(imgAvatar);
+
+
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,10 +70,20 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 //        initGoogle();
+    }
+
+    private void AnhXa() {
+        // get headerLayout
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        View header = navigationView.getHeaderView(0);
+        imgAvatar = header.findViewById(R.id.Avatar);
+        txtName = header.findViewById(R.id.txtusername);
+        txtemail = header.findViewById(R.id.txtEmail);
+
     }
 
     @Override
@@ -102,15 +125,15 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.contactlist) {
-            Intent intent = new Intent(MainActivity.this,Contact.class);
+            Intent intent = new Intent(MainActivity.this, Contact.class);
             startActivity(intent);
         } else if (id == R.id.group) {
-            Intent i = new Intent(MainActivity.this,NewGroup.class);
+            Intent i = new Intent(MainActivity.this, NewGroup.class);
             startActivity(i);
         } else if (id == R.id.infomation) {
 
         } else if (id == R.id.mygroup) {
-            Intent i1 = new Intent(MainActivity.this,MyGroup.class);
+            Intent i1 = new Intent(MainActivity.this, MyGroup.class);
             startActivity(i1);
         } else if (id == R.id.Logout) {
 
@@ -122,7 +145,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-//    private void initGoogle() {
+    //    private void initGoogle() {
 //        mAuth = FirebaseAuth.getInstance();
 //
 //        //Get imageview and textview header
@@ -164,4 +187,5 @@ public class MainActivity extends AppCompatActivity
 //            Toast.makeText(this, e + "", Toast.LENGTH_SHORT).show();
 //        }
 //    }
+
 }

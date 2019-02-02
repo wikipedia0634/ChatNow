@@ -8,8 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MemberAdapter extends RecyclerView.Adapter {
     private ArrayList<MemberData> mMember;
@@ -37,13 +41,14 @@ public class MemberAdapter extends RecyclerView.Adapter {
         private View itemview;
         public TextView username;
         public TextView time;
-
+        public CircleImageView imgStory;
         public ViewHolder(View itemView){
             super(itemView);
 
             itemview = itemView;
             username = itemView.findViewById(R.id.username);
             time = itemView.findViewById(R.id.time);
+            imgStory=itemview.findViewById(R.id.imgStory);
         }
     }
 
@@ -51,7 +56,10 @@ public class MemberAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int i) {
         ((ViewHolder)holder).username.setText(mMember.get(i).getName());
         ((ViewHolder)holder).time.setText(mMember.get(i).getTime()+"");
+        if(mMember.get(i).getUrlAvatar()!=null){
+            Picasso.get().load(mMember.get(i).getUrlAvatar()).into( ((ViewHolder)holder).imgStory);
 
+        }
 
     }
 
