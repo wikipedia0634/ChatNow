@@ -3,20 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingVertical="10dp"
-    android:paddingRight="15dp"
-    android:paddingLeft="60dp"
     android:clipToPadding="false">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/message_body"
-        android:background="@drawable/my_message"
-        android:textColor="#fff"
+        android:background="@drawable/user_connected"
         android:padding="10dp"
+        android:layout_centerHorizontal="true"
         android:elevation="2dp"
-        android:textSize="18sp"
-        android:layout_alignParentRight="true"
+        android:textSize="10dp"
         android:text="Placeholder message"
         />
 
