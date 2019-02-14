@@ -32,13 +32,7 @@
             android:paddingRight="10sp"
             android:paddingLeft="10sp"/>
 
-        <ImageButton
-            android:id="@+id/btn_add_more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:layout_marginLeft="220sp"
-            android:background="@drawable/ic_action_add"/>
+
 
     </android.support.v7.widget.Toolbar>
 

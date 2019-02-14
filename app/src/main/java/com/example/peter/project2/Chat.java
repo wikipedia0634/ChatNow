@@ -41,6 +41,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import static com.example.peter.project2.R.id.btn_back_chat;
+
 public class Chat extends AppCompatActivity {
 
     Button btn_back_chat;
@@ -70,7 +72,7 @@ public class Chat extends AppCompatActivity {
     private Socket mSocket;
     {
         try {
-            mSocket = IO.socket("http://192.168.1.87:5000");
+            mSocket = IO.socket("http://10.200.202.111:5000");
         } catch (URISyntaxException e) {}
     }
 

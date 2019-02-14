@@ -9,6 +9,10 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="Contact List" />
         <item
+            android:id="@+id/addfriend"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Add Friend" />
+        <item
             android:id="@+id/group"
             android:icon="@drawable/ic_menu_gallery"
             android:title="New Group" />

@@ -7,13 +7,10 @@
         android:value="@integer/google_play_services_version" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-
-
-
 
     <application
         android:allowBackup="true"
@@ -22,27 +19,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".AddFriend">
+
+        </activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SplashActivity" >
+
+
+        <activity android:name=".SplashActivity">
 
         </activity>
-        <activity android:name=".Contact" >
+        <activity android:name=".Contact">
 
         </activity>
-        <activity android:name=".Login" >
-
-
-        </activity>
-        <activity android:name=".Chat">
-
-
-        </activity>
-        <activity android:name=".NewGroup" />
-        <activity android:name=".MyGroup"></activity>
-        <activity android:name=".AddUserActivity">
+        <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -50,8 +42,23 @@
             </intent-filter>
 
 
-        </activity>
 
+        </activity>
+        <activity android:name=".Chat">
+
+
+        </activity>
+        <activity android:name=".NewGroup" >
+
+        </activity>
+        <activity android:name=".MyGroup" />
+        <activity android:name=".AddUserActivity">
+
+
+
+
+
+        </activity>
     </application>
 
 </manifest>

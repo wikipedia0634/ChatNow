@@ -159,7 +159,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
             public void onResponse(Call<MemberData> call, Response<MemberData> response) {
                 MemberData currrentUser = response.body();
                 // Di chuyển qua màn hình chính
-                Intent i = new Intent(Login.this,MainActivity.class);
+                Intent i = new Intent(Login.this,AddUserActivity.class);
                 i.putExtra("user-info",currrentUser);
 
 

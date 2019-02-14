@@ -3,8 +3,10 @@ package com.example.peter.project2;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,7 +21,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.peter.project2.Service.SaveLocal;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallbacks;
+import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
@@ -36,6 +41,8 @@ public class MainActivity extends AppCompatActivity
     ImageView imgAvatar;
     TextView txtName, txtemail;
 
+    FloatingActionButton fab;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +50,7 @@ public class MainActivity extends AppCompatActivity
         //SharedPreferences
 
         AnhXa();
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -127,22 +135,42 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.contactlist) {
             Intent intent = new Intent(MainActivity.this, Contact.class);
             startActivity(intent);
+        } else if (id == R.id.addfriend) {
+            Intent i4 = new Intent(MainActivity.this, AddFriend.class);
+            startActivity(i4);
         } else if (id == R.id.group) {
             Intent i = new Intent(MainActivity.this, NewGroup.class);
             startActivity(i);
         } else if (id == R.id.infomation) {
-
+            Intent i2 = new Intent(MainActivity.this, Login.class);
+            startActivity(i2);
         } else if (id == R.id.mygroup) {
             Intent i1 = new Intent(MainActivity.this, MyGroup.class);
             startActivity(i1);
         } else if (id == R.id.Logout) {
-
+            signOut();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
 
+    }
+
+    private void signOut(){
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallbacks<Status>() {
+            @Override
+            public void onSuccess(@NonNull Status status) {
+                txtName.setText("Đã thoát");
+                txtemail.setText("Đã Out");
+                imgAvatar.setImageResource(R.drawable.slogan);
+            }
+
+            @Override
+            public void onFailure(@NonNull Status status) {
+                Toast.makeText(MainActivity.this,"Lỗi",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     //    private void initGoogle() {

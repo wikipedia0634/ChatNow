@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.peter.project2.Service.SaveLocal;
+
 public class AddUserActivity extends AppCompatActivity {
 
     private Button setNickName;
@@ -50,7 +52,7 @@ public class AddUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AddUserActivity.this, Chat.class);
-                intent.putExtra("username", userNickName.getText().toString());
+                intent.putExtra("username", SaveLocal.getUserNameFromLocal(AddUserActivity.this));
                 startActivity(intent);
             }
         });

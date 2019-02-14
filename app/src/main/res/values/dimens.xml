@@ -7,5 +7,6 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="Sizechuan">20sp</dimen>
     <dimen name="paddingchuan">10sp</dimen>
+    <dimen name="marginchuan">10sp</dimen>
     <dimen name="Sizephu">15sp</dimen>
 </resources>
