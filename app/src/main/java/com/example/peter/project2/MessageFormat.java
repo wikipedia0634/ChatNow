@@ -1,6 +1,20 @@
 package com.example.peter.project2;
 
 public class MessageFormat {
+//    owner: {
+//        type: user,
+//                required: true
+//    },
+//    content: {
+//        type: String
+//    },
+//    urlImage: {
+//        type: String
+//    },
+//    urlAudio: {
+//        type: String
+//    },
+//    createdDate: { type: Date, default: Date.now },
 
     private String Username;
     private String Message;

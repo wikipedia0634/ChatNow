@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.nkzawa.emitter.Emitter;
@@ -47,11 +48,11 @@ public class Chat extends AppCompatActivity {
 
     Button btn_back_chat;
     ImageButton btn_voice;
-
+    TextView txt_name;
     private EditText textField;
     private ImageButton sendButton;
 
-    public static final String TAG  = "Chat";
+    public static final String TAG = "Chat";
     public static String uniqueId;
 
     private String Username;
@@ -70,20 +71,22 @@ public class Chat extends AppCompatActivity {
     private String outputFile = null;
 
     private Socket mSocket;
+
     {
         try {
-            mSocket = IO.socket("http://10.200.202.111:5000");
-        } catch (URISyntaxException e) {}
+            mSocket = IO.socket("http://192.168.1.109:5000");
+        } catch (URISyntaxException e) {
+        }
     }
 
 
     @SuppressLint("HandlerLeak")
-    Handler handler2=new Handler(){
+    Handler handler2 = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             Log.i(TAG, "handleMessage: typing stopped " + startTyping);
-            if(time == 0){
+            if (time == 0) {
                 setTitle("SocketIO");
                 Log.i(TAG, "handleMessage: typing stopped time is " + time);
                 startTyping = false;
@@ -94,13 +97,14 @@ public class Chat extends AppCompatActivity {
     };
 
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        txt_name = findViewById(R.id.txt_name);
+        // lấy name từ activity contact truyền qua
+        txt_name.setText(getIntent().getStringExtra("name"));
+
         btn_back_chat = findViewById(R.id.btn_back_chat);
 
         btn_back_chat.setOnClickListener(new View.OnClickListener() {
@@ -116,11 +120,10 @@ public class Chat extends AppCompatActivity {
         btn_voice.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction()== MotionEvent.ACTION_DOWN){
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     ghi(v);
 
-                }
-                else if (event.getAction()==MotionEvent.ACTION_UP){
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
 
                     xong(v);
 
@@ -142,13 +145,13 @@ public class Chat extends AppCompatActivity {
         uniqueId = UUID.randomUUID().toString();
         Log.i(TAG, "onCreate: " + uniqueId);
 
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             hasConnection = savedInstanceState.getBoolean("hasConnection");
         }
 
-        if(hasConnection){
+        if (hasConnection) {
 
-        }else {
+        } else {
             mSocket.connect();
             mSocket.on("connect user", onNewUser);
             mSocket.on("chat message", onNewMessage);
@@ -181,14 +184,13 @@ public class Chat extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean("hasConnection", hasConnection);
     }
 
-    public void onTypeButtonEnable(){
+    public void onTypeButtonEnable() {
         textField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -226,7 +228,6 @@ public class Chat extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-
 
 
                     Log.i(TAG, "run: ");
@@ -270,7 +271,6 @@ public class Chat extends AppCompatActivity {
         }
 
 
-
     };
 
     Emitter.Listener onNewUser = new Emitter.Listener() {
@@ -281,13 +281,13 @@ public class Chat extends AppCompatActivity {
                 public void run() {
                     int length = args.length;
 
-                    if(length == 0){
+                    if (length == 0) {
                         return;
                     }
                     //Here i'm getting weird error..................///////run :1 and run: 0
                     Log.i(TAG, "run: ");
                     Log.i(TAG, "run: " + args.length);
-                    String username =args[0].toString();
+                    String username = args[0].toString();
                     try {
                         JSONObject object = new JSONObject(username);
                         username = object.getString("username");
@@ -297,7 +297,7 @@ public class Chat extends AppCompatActivity {
                     MessageFormat format = new MessageFormat(null, username, null);
                     messageAdapter.add(format);
                     messageListView.smoothScrollToPosition(0);
-                    messageListView.scrollTo(0, messageAdapter.getCount()-1);
+                    messageListView.scrollTo(0, messageAdapter.getCount() - 1);
                     Log.i(TAG, "run: " + username);
                 }
             });
@@ -318,22 +318,22 @@ public class Chat extends AppCompatActivity {
                         String userName = data.getString("username") + " is Typing......";
                         String id = data.getString("uniqueId");
 
-                        if(id.equals(uniqueId)){
+                        if (id.equals(uniqueId)) {
                             typingOrNot = false;
-                        }else {
+                        } else {
                             setTitle(userName);
                         }
 
-                        if(typingOrNot){
+                        if (typingOrNot) {
 
-                            if(!startTyping){
+                            if (!startTyping) {
                                 startTyping = true;
-                                thread2=new Thread(
+                                thread2 = new Thread(
                                         new Runnable() {
                                             @Override
                                             public void run() {
-                                                while(time > 0) {
-                                                    synchronized (this){
+                                                while (time > 0) {
+                                                    synchronized (this) {
                                                         try {
                                                             wait(1000);
                                                             Log.i(TAG, "run: typing " + time);
@@ -349,7 +349,7 @@ public class Chat extends AppCompatActivity {
                                         }
                                 );
                                 thread2.start();
-                            }else {
+                            } else {
                                 time = 2;
                             }
 
@@ -366,10 +366,10 @@ public class Chat extends AppCompatActivity {
 
     }
 
-    public void sendMessage(View view){
+    public void sendMessage(View view) {
         Log.i(TAG, "sendMessage: ");
         String message = textField.getText().toString().trim();
-        if(TextUtils.isEmpty(message)){
+        if (TextUtils.isEmpty(message)) {
             Log.i(TAG, "sendMessage:2 ");
             return;
         }
@@ -382,14 +382,14 @@ public class Chat extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.i(TAG, "sendMessage: 1"+ mSocket.emit("chat message", jsonObject));
+        Log.i(TAG, "sendMessage: 1" + mSocket.emit("chat message", jsonObject));
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
 
-        if(isFinishing()){
+        if (isFinishing()) {
             Log.i(TAG, "onDestroy: ");
 
             JSONObject userId = new JSONObject();
@@ -406,14 +406,14 @@ public class Chat extends AppCompatActivity {
             mSocket.off("on typing", onTyping);
             Username = "";
             messageAdapter.clear();
-        }else {
+        } else {
             Log.i(TAG, "onDestroy: is rotating.....");
         }
 
     }
 
 
-    public void ghi(View view){
+    public void ghi(View view) {
         try {
 
             outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/chatnow.3gpp";
@@ -434,11 +434,11 @@ public class Chat extends AppCompatActivity {
                 Toast.LENGTH_SHORT).show();
     }
 
-    public void xong(View view){
+    public void xong(View view) {
         try {
             myRecorder.stop();
             myRecorder.release();
-            myRecorder  = null;
+            myRecorder = null;
 
             Toast.makeText(getApplicationContext(), "Stop recording...",
                     Toast.LENGTH_SHORT).show();
@@ -449,7 +449,7 @@ public class Chat extends AppCompatActivity {
         }
     }
 
-    public byte[] FileLocal_To_Byte(String path){
+    public byte[] FileLocal_To_Byte(String path) {
         File file = new File(path);
         int size = (int) file.length();
         byte[] bytes = new byte[size];
@@ -511,7 +511,6 @@ public class Chat extends AppCompatActivity {
             ex.printStackTrace();
         }
     }
-
 
 
 }

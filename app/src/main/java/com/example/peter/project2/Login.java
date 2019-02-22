@@ -1,16 +1,14 @@
 package com.example.peter.project2;
 
-import android.app.Activity;
-import android.content.Context;
+import android.R.*;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.example.peter.project2.RetrofitAPI.APIClient;
 import com.example.peter.project2.RetrofitAPI.UserAPI;
@@ -22,9 +20,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.gson.Gson;
 
-import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,18 +36,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
 //    private FirebaseAuth mAuth;
 //    public FirebaseUser user;
     UserAPI userAPI;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
 
-
-
-
         tv_boqua = findViewById(R.id.tv_boqua);
         txtName = findViewById(R.id.txtusername);
-        txtEmail = findViewById(R.id.txtEmail);
+//        txtEmail = findViewById(R.id.txtEmail);
 //        imageView = findViewById((R.id.Avatar));
         SignInButton signInButton = findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
@@ -122,18 +116,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
             // lưu lên sever
             getResponse(user);
             // lưu email vào local
-            SaveLocal.saveUserNameToLocal(acct.getEmail(),this);
+            SaveLocal.saveUserNameToLocal(acct.getEmail(), this);
 
 //            txtEmail.setText(acct.getEmail().toString());
 //            txtName.setText(acct.getDisplayName().toString());
-            txtEmail.setText(acct.getPhotoUrl().toString());
+//            txtEmail.setText(acct.getPhotoUrl().toString());
 
 //            Picasso.get().load(acct.getPhotoUrl()).into(imageView);
 
 //            Intent intent = new Intent(Login.this,MainActivity.class);
 //            startActivity(intent);
-        } else {
-
         }
     }
 
@@ -150,26 +142,23 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Go
         mGoogleApiClient.disconnect();
     }
 
-    void getResponse(MemberData user){
+    void getResponse(MemberData user) {
         //khởi tạo retrofit
-        userAPI =APIClient.getClient().create(UserAPI.class);
-        Call<MemberData> call =userAPI.createUser(user);
+        userAPI = APIClient.getClient().create(UserAPI.class);
+        Call<MemberData> call = userAPI.createUser(user);
         call.enqueue(new Callback<MemberData>() {
             @Override
             public void onResponse(Call<MemberData> call, Response<MemberData> response) {
                 MemberData currrentUser = response.body();
                 // Di chuyển qua màn hình chính
-                Intent i = new Intent(Login.this,AddUserActivity.class);
-                i.putExtra("user-info",currrentUser);
-
-
-                //
+                Intent i = new Intent(Login.this, MainActivity.class);
+                i.putExtra("user-info", currrentUser);
                 startActivity(i);
             }
 
             @Override
             public void onFailure(Call<MemberData> call, Throwable t) {
-                Log.d("Có lỗi",""+t);
+                Log.d("Có lỗi", "" + t);
             }
         });
     }

@@ -1,11 +1,13 @@
 package com.example.peter.project2;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 import com.example.peter.project2.RetrofitAPI.APIClient;
@@ -28,6 +30,7 @@ public class Contact extends AppCompatActivity {
     UserAPI userAPI;
     String userName;
     LinearLayoutManager linearLayoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +38,7 @@ public class Contact extends AppCompatActivity {
         btn_back_contact = findViewById(R.id.btn_back_contact);
         recyclerView = findViewById(R.id.Rcv_contact);
         // get userName from local
-        userName=SaveLocal.getUserNameFromLocal(this);
+        userName = SaveLocal.getUserNameFromLocal(this);
         //get listContacts
         getListContacts();
 
@@ -47,40 +50,35 @@ public class Contact extends AppCompatActivity {
         });
 
 
-
-//       memberData = new ArrayList();
-//        for (int i=0; i <= 20; i++){
-//            memberData.add(new MemberData("User " + i, 1 + i++));
-//        }
-
-
-
-
     }
-    private void getListContacts(){
-        userAPI= APIClient.getClient().create(UserAPI.class);
-        Call<List<MemberData>> call=userAPI.listFriend(this.userName);
-       call.enqueue(new Callback<List<MemberData>>() {
-           @Override
-           public void onResponse(Call<List<MemberData>> call, Response<List<MemberData>> response) {
-              memberData= (ArrayList<MemberData>) response.body();
-              if(memberData!=null){
-                  setUpRecyleView();
-              }
-           }
 
-           @Override
-           public void onFailure(Call<List<MemberData>> call, Throwable t) {
+    private void getListContacts() {
+        userAPI = APIClient.getClient().create(UserAPI.class);
+        Call<List<MemberData>> call = userAPI.listFriend(this.userName);
+        call.enqueue(new Callback<List<MemberData>>() {
+            @Override
+            public void onResponse(Call<List<MemberData>> call, Response<List<MemberData>> response) {
+                memberData = (ArrayList<MemberData>) response.body();
+                Toast.makeText(Contact.this, "size " + memberData.size(), Toast.LENGTH_SHORT).show();
+                if (memberData != null) {
+                    setUpRecyleView();
+                }
+            }
 
-           }
-       });
+            @Override
+            public void onFailure(Call<List<MemberData>> call, Throwable t) {
+
+            }
+        });
     }
-    private void setUpRecyleView(){
-        adapter = new MemberAdapter(memberData,this);
+
+    private void setUpRecyleView() {
+        adapter = new MemberAdapter(memberData, this);
 
         linearLayoutManager = new LinearLayoutManager(this);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(linearLayoutManager);
     }
+
 }

@@ -5,7 +5,9 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class Friend  implements Serializable {
-    @SerializedName("_id")
+    @SerializedName("userName")
+    String emailUser;
+    @SerializedName("idFriend")
     String _id;
     @SerializedName("name")
     String name;
@@ -13,6 +15,14 @@ public class Friend  implements Serializable {
     String urlAvatar;
 
     public Friend() {
+    }
+
+    public String getEmailUser() {
+        return emailUser;
+    }
+
+    public void setEmailUser(String emailUser) {
+        this.emailUser = emailUser;
     }
 
     public String get_id() {

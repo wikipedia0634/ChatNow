@@ -9,6 +9,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface UserAPI {
@@ -16,4 +17,8 @@ public interface UserAPI {
      Call<MemberData> createUser(@Body MemberData user);
     @GET("/listFriend/{userName}")
     Call<List<MemberData>> listFriend(@Path("userName") String email);
+    @GET("/getAllUser")
+    Call<List<MemberData>> listUser();
+    @PUT("/addFriendByUserName")
+    Call<List<MemberData>> addFriend(@Body Friend friend);
 }
